@@ -280,7 +280,7 @@ int survive_get_so_locations(SurviveContext * ctx,FLT* LocationNormals,int Locat
 		
 		for ( int i=0;	i<3;	i++ )
 		{
-			int outindex = LocationNormals[ LNIndex + 0 + i ];
+			int outindex = LNIndex + 0 + i;
 			if ( outindex >= LocationNormalsSize )
 				continue;
 			LocationNormals[outindex] = so->sensor_locations[ (v*3) + i ];
@@ -288,7 +288,7 @@ int survive_get_so_locations(SurviveContext * ctx,FLT* LocationNormals,int Locat
 		
 		for ( int i=0;	i<3;	i++ )
 		{
-			int outindex = LocationNormals[ LNIndex + 3 + i ];
+			int outindex = LNIndex + 3 + i;
 			if ( outindex >= LocationNormalsSize )
 				continue;
 			LocationNormals[outindex] = so->sensor_normals[ (v*3) + i ];
