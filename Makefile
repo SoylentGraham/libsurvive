@@ -1,4 +1,4 @@
-all : lib data_recorder test calibrate calibrate_client
+all : lib dylib data_recorder test calibrate calibrate_client
 
 CC:=gcc
 
@@ -84,8 +84,14 @@ static_calibrate : calibrate.c redist/os_generic.c $(DRAWFUNCTIONS) $(LIBSURVIVE
 lib:
 	mkdir lib
 
+dylib: ./lib/libsurvive.dylib
+#mkdir lib
+
 lib/libsurvive.so : $(LIBSURVIVE_O)
 	$(CC) -o $@ $^ $(LDFLAGS) -shared
+
+lib/libsurvive.dylib : $(LIBSURVIVE_O)
+	$(CC) -o $@ $^ $(LDFLAGS) -dynamiclib
 
 
 calibrate_tcc : $(LIBSURVIVE_C)
