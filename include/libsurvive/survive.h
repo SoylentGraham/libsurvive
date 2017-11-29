@@ -130,6 +130,10 @@ int survive_poll( SurviveContext * ctx );
 
 SurviveObject * survive_get_so_by_name( SurviveContext * ctx, const char * name );
 
+//	get locations to an array of floats (assming 6 floats but stride dictates this). returns location count (0 if missing), in case LocationsSize is too small
+int survive_get_so_locations(SurviveContext * ctx,FLT* LocationNormals,int LocationNormalsSize,int LocationNormalsStride,const char * name);
+
+	
 //Utilitiy functions.
 int survive_simple_inflate( SurviveContext * ctx, const char * input, int inlen, char * output, int outlen );
 

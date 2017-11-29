@@ -254,6 +254,9 @@ int survive_poll( struct SurviveContext * ctx )
 
 struct SurviveObject * survive_get_so_by_name( struct SurviveContext * ctx, const char * name )
 {
+	if ( ctx == NULL )
+		return 0;
+	
 	int i;
 	for( i = 0; i < ctx->objs_ct; i++ )
 	{
@@ -262,6 +265,40 @@ struct SurviveObject * survive_get_so_by_name( struct SurviveContext * ctx, cons
 	}
 	return 0;
 }
+
+int survive_get_so_locations(SurviveContext * ctx,FLT* LocationNormals,int LocationNormalsSize,int LocationNormalsStride,const char * name)
+{
+	if ( ctx == NULL )
+		return -1;
+	struct SurviveObject* so = survive_get_so_by_name( ctx, name );
+	if ( so == NULL )
+		return 0;
+	
+	for ( int v=0;	v<so->nr_locations;	v++ )
+	{
+		int LNIndex = (v * LocationNormalsStride);
+		
+		for ( int i=0;	i<3;	i++ )
+		{
+			int outindex = LocationNormals[ LNIndex + 0 + i ];
+			if ( outindex >= LocationNormalsSize )
+				continue;
+			LocationNormals[outindex] = so->sensor_locations[ (v*3) + (0+i) ];
+		}
+		
+		for ( int i=0;	i<3;	i++ )
+		{
+			int outindex = LocationNormals[ LNIndex + 3 + i ];
+			if ( outindex >= LocationNormalsSize )
+				continue;
+			LocationNormals[outindex] = so->sensor_normals[ (v*3) + (3+i) ];
+		}
+		
+	}
+	
+	return so->nr_locations;
+}
+
 
 #ifdef NOZLIB
 
